@@ -6,8 +6,26 @@ import {
   Dimensions,
   Image
 } from 'react-native';
+import ReportingClient from 'reporting_client';
+import MessageRequest from './MessageRequest';
+import MessageResponse from './MessageResponse';
 
 export default class reporting_app extends Component {
+
+constructor(props){
+  super(props);
+  this.state = {message:{}};
+  this.ReportingClient = new ReportingClient();
+}
+
+monitorMessage = (message) => {
+  this.setState({message});
+}
+
+componentDidMount(){
+  this.ReportingClient.monitorMessage(this.props.messageId, this.monitorMessage);
+}
+
   render() {
     var img;
     if (this.props.image) {
@@ -16,15 +34,14 @@ export default class reporting_app extends Component {
           source={{uri: this.props.image}}
         />
     }
-    return (
-      <View style={styles.view}>
-        <View style={styles.container}>
-          {img}
-          <Text style={styles.text}> {this.props.message.text} </Text>
-        </View>
-        <Text style={styles.dateTime}> {this.props.message.date}  </Text>
-      </View>
-    );
+    var msg;
+    if(this.state.message.author === 'anon1'){
+      msg = <MessageRequest message = {this.state.message}/>;
+    } else{
+      msg = <MessageResponse message = {this.state.message}/>;
+    }
+
+    return msg;
   }
 }
 

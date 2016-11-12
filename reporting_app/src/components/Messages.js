@@ -6,85 +6,26 @@ import {
   Dimensions,
   ListView
 } from 'react-native';
-import MessageResponse from './MessageResponse';
-import MessageRequest from './MessageRequest';
-
-
-
+import Message from './Message';
 
 export default class reporting_app extends Component {
 
-    constructor() {
-      super();
-      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.state = {
-        dataSource: ds.cloneWithRows([{
-          dateTime: '09:34 Uhr',
-          text: `  Hier steht dann eine Nachricht
-            djosa
-            kdjopsajdklasjdsa`,
-          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Laudtee_Meenikunnos.jpg/800px-Laudtee_Meenikunnos.jpg',
-          type: 'MessageRequest'
-        }, {
-          dateTime: '08:15 Uhr',
-          text: `Super Tolles Bild
-            ich bezahl dir
-            1000000 Millionen
-            ok?`,
-          type: 'MessageResponse'
-        }, {
-          dateTime: '08:15 Uhr',
-          text: `Ich machs für
-            101001010101010 Millionen`,
-          type: 'MessageResponse'
-        }, {
-          dateTime: '08:15 Uhr',
-          text: `Dann halt NICHT
-            Tschüss`,
-          type: 'MessageResponse',
-        }, {
-          dateTime: '09:34 Uhr',
-          text: `  Ja ok, ich machs
-            EASZY
-            GG WP`,
-          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Laudtee_Meenikunnos.jpg/800px-Laudtee_Meenikunnos.jpg',
-          type: 'MessageRequest'
-        }, {
-          dateTime: '09:34 Uhr',
-          text: `Ja ok, ich machs
-            EASZY
-            GG WP`,
-          type: 'MessageRequest'
-        }, {
-          dateTime: '09:34 Uhr',
-          text: `  Ja ok, ich machs
-            EASZY
-            GG WP`,
-          type: 'MessageRequest'
-        }]),
-      };
-    }
-
-    renderMessage = (Message) => {
-      if (Message.type === 'MessageResponse'){
+    renderMessage = (messageId) => {
         return(
-          <MessageResponse {...Message} style={styles.container}/>
+          <Message messageId={messageId} style={styles.container}/>
         )
-      }
-      if(Message.type === 'MessageRequest'){
-        return(
-          <MessageRequest {...Message} style={styles.container}/>
-        )
-      }
-
     }
 
 
   render() {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var dataSource =  ds.cloneWithRows(this.props.messages|| []);
+
+
     return (
       <View style={styles.container}>
         <ListView
-          dataSource={this.state.dataSource}
+          dataSource={dataSource}
           renderRow={this.renderMessage}
         />
       </View>

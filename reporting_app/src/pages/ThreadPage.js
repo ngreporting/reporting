@@ -27,7 +27,7 @@ class ThreadPage extends Component {
   }
 
   monitorThread = (thread) => {
-    this.setState({thread})
+    this.setState({thread});
   }
 
   componentDidMount() {
@@ -38,6 +38,8 @@ class ThreadPage extends Component {
     var {width, height} = Dimensions.get('window')
     var textInputHeight = width < 1000? 20:40;
     console.log(width, height, PixelRatio.get())
+
+
     return (
       <View style={{flex: 1, marginTop: 30}}>
       <StatusBar
@@ -46,7 +48,7 @@ class ThreadPage extends Component {
       />
 
 
-      <Messages/>
+      <Messages messages= {this.state.thread.messages}/>
         <View style={{ backgroundColor: 'white',borderRadius: 7 , margin: 10, width: (width*0.98), flexDirection: 'row'}}>
 
           <TextInput
@@ -56,7 +58,7 @@ class ThreadPage extends Component {
             value={this.state.message} />
 
             <TouchableOpacity
-              onPress={() => this.ReportingClient.addMessage(1, this.state.message)}
+              onPress={() => this.ReportingClient.addMessage(this.props.threadId, this.state.message)}
               style={styles.navBarRightButton}>
               <Icon name="paper-plane" size={30} color="#8498db" style={{}}/>
             </TouchableOpacity>

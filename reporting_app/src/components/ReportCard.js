@@ -42,7 +42,7 @@ class ReportCard extends Component {
     var threadRows = []
     if (this.props.threads) {
       this.props.threads.map((threadId) => {
-        threadRows.push(<ThreadRow key={threadId} threadId={threadId} />)
+        threadRows.push(<ThreadRow key={threadId} threadId={threadId} navigator={this.props.navigator} />)
       })
     }
 
