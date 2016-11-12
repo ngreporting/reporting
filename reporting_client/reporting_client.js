@@ -94,140 +94,69 @@ class ReportingClient {
         return false
     }
 
+    _monitor(path, cb, query = ref => ref) {
+        if (this._delay(this._monitor.bind(this, path, cb, query))) {
+            return
+        }
+        const ref = this.firebase.database().ref(path)
+        const listener = query(ref).on('value', (snapshot) => {
+            console.log(`New value for ${path}: ` + JSON.stringify(snapshot.val()))
+            cb(snapshot.val() || {})
+        })
+        return ref.off.bind(ref, listener)
+    }
+
     // Calls cb with all reports visible to the logged in user (all reports
     // for journalists, own reports for any one else). Returns a function to
     // cancle monitoring.
     monitorReports (cb) {
-        if (this._delay(this.monitorReports.bind(this, cb))) {
-            return
-        }
-        const ref = this.firebase.database().ref('reports')
-        const listener = ref.orderByChild('author').equalTo(this.user.uid).on('value', (snapshot) => {
-            console.log('recieved reports: ', JSON.stringify(snapshot.val()));
-            cb(snapshot.val() || {})
-        })
-        // setTimeout(()=>{
-        //     cb({
-        //         'rep1': {
-        //             text: 'Toller Bericht',
-        //             author: 'anon1',
-        //             date: 1478905163895,
-        //             attachments: ['a', 'b'],
-        //             position: {
-        //                 lat: 55.0,
-        //                 lng: 40.0
-        //             }
-        //         },
-        //         'rep2': {
-        //             text: 'Toller Bericht 2',
-        //             author: 'anon1',
-        //             date: 1478907163895,
-        //             position: {
-        //                 lat: 55.0,
-        //                 lng: 40.0
-        //             },
-        //             threads: ['a', 'b']
-        //         },
-        //         'rep3': {
-        //             text: 'Toller Bericht 3',
-        //             author: 'anon1',
-        //             date: 1478908163895,
-        //             attachments: ['c']
-        //         }
-        //     })
-        // }, 20)
-        return () => {
-            ref.off(listener)
-        }
+        return this._monitor('reports', cb, ref => ref.orderByChild('author').equalTo(this.user.uid))
     }
 
     // Calls cb for every change of the given thread. Returns a function to
     // cancle monitoring.
     monitorThread(thread, cb) {
-        if (this._delay(this.monitorThread.bind(this, thread, cb))) {
-            return
-        }
-        setTimeout(()=>{
-            cb({
-                report: 'rep2',
-                responder: 'user1',
-                messages: ['mes1', 'mes2']
-            })
-        }, 20)
-        return () => {}
+        return this._monitor(`threads/${thread}`, cb)
     }
 
     // Calls cb for every change of the given message. Returns a function to
     // cancle monitoring.
     monitorMessage(message, cb) {
-        if (this._delay(this.monitorMessage.bind(this, message, cb))) {
-            return
-        }
-        setTimeout(()=>{
-            cb({
-                text: 'nachfrage',
-                author: (message == 'mes2') ? 'anon1' : 'user1',
-                date: 1478909163895
-            })
-        }, 20)
-        return () => {}
+        return this._monitor(`messages/${message}`, cb)
     }
 
     // Monitor specific report. Returns a function to
     // cancle monitoring.
     monitorReport(report, cb) {
-        if (this._delay(this.monitorReport.bind(this, report, cb))) {
-            return
-        }
-        setTimeout(()=>{
-            cb({
-                [report]: {
-                    text: 'Toller Bericht',
-                    author: 'anon1',
-                    date: 1478905163895,
-                    attachments: ['a', 'b'],
-                    position: {
-                        lat: 55.0,
-                        lng: 40.0
-                    }
-                }
-            })
-        }, 20)
-        return () => {}
+        return this._monitor(`reports/${report}`, cb)
     }
 
     // Register change handler for changes on given user
     monitorUser(user, cb) {
-        if (this._delay(this.monitorUser.bind(this, user, cb))) {
-            return
+        return this._monitor(`users/${user}`, cb)
+    }
+
+    _add(category, val, reference = undefined) {
+        const ref = reference || this.firebase.database().ref('category').push()
+        if (this._delay(this._add.bind(this, category, val, ref))) {
+            return ref.key
         }
-        setTimeout(()=>{
-            cb({
-                [user]: {
-                    name: 'Mike Müller',
-                    organization: 'SWR'
-                }
-            })
-        }, 20)
-        return () => {}
+        ref.set(val)
+        return ref.key
     }
 
     // Add new message to thred. Returns new uid.
     addMessage(thread, text) {
-        if (this._delay(this.addMessage.bind(this, thread, text))) {
-            return
-        }
-        // todo
-        return 'newKey'
+        return this._add('messages', {
+            author: this.user.uid,
+            date: Date.now(),
+            text: text
+        })
     }
 
     // Add new report. Returns uid
     addReport(report) {
-         if (this._delay(this.addReport.bind(this, report))) {
-            return
-        }
-        // todo
-        return 'newReport'
+        return this._add('reports', report)
     }
 
     // Upload attachment with base64 encoded data and given extension
@@ -252,19 +181,20 @@ class ReportingClient {
         }, 5500)
     }
 
-    //
-    updateReport(uid, report) {
-        if (this._delay(this.updateReport.bind(this, uid, report))) {
+    _update(path, val) {
+        if (this._delay(this._update.bind(this, path, val))) {
             return
         }
-        //todo
+        this.firebase.database().ref(path).update(val)
+    }
+
+    //
+    updateReport(uid, report) {
+        this._update(`reports/${uid}`, report)
     }
 
     updateMessage(uid, message) {
-        if (this._delay(this.updateMessage.bind(this, uid, message))) {
-            return
-        }
-        //todo
+        this._update(`messages/${uid}`, message)
     }
 }
 
