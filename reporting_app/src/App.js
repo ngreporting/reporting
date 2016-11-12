@@ -14,8 +14,10 @@ import {
   Navigator,
   TouchableHighlight,
   TouchableOpacity,
-  Dimensions
+  Dimensions,
+  StatusBar
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import ListPage from './pages/ListPage';
 import ThreadPage from './pages/ThreadPage';
@@ -35,9 +37,9 @@ var NavigationBarRouteMapper = {
         <TouchableOpacity
           onPress={() => navigator.pop()}
           style={styles.navBarRightButton}>
-          <Text style={[styles.navBarText, styles.navBarButtonText]}>
-             {`< Zurück`}
-          </Text>
+          <View style={{marginLeft: 10, marginTop: 5}}>
+            <Icon name="chevron-circle-left" size={30} color="white" style={{left: 0}} />
+          </View>
         </TouchableOpacity>
       );
     }
@@ -49,9 +51,11 @@ var NavigationBarRouteMapper = {
         <TouchableOpacity
           //onPress={() => navigator.push()}
           style={styles.navBarRightButton}>
-          <Text style={[styles.navBarText, styles.navBarButtonText]}>
-             INFO
-          </Text>
+
+          <View style={{marginRight: 40, marginTop: 5}}>
+            <Icon name="info-circle" size={30} color="white" style={{left: 0}} />
+          </View>
+
         </TouchableOpacity>
       );
   }
@@ -73,6 +77,7 @@ export default class reporting_app extends Component {
 
   render() {
     return (
+
       <Navigator
         initialRoute={{index: 0, title: 'Olepsy'}}
         renderScene={this.renderScene}
@@ -80,9 +85,10 @@ export default class reporting_app extends Component {
         navigationBar={
           <Navigator.NavigationBar
           routeMapper={NavigationBarRouteMapper}
-          style={{backgroundColor: 'red',
+          style={{backgroundColor: '#8498db',
                   height: 45}}
           />
+
         }/>
 
     );
@@ -102,6 +108,10 @@ const styles = StyleSheet.create({
     fontSize: 30
   },
   navBarText: {
+    backgroundColor: 'white',
+    opacity: 0.7,
+    margin: 2,
+    borderRadius: 5,
     color: 'blue',
     fontSize: 30
   }

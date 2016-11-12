@@ -7,7 +7,8 @@ import {
   StyleSheet,
   TextInput,
   View,
-  PixelRatio
+  PixelRatio,
+  StatusBar
 } from 'react-native';
 import ThreadCard from '../components/ThreadCard'
 import Messages from '../components/Messages'
@@ -27,6 +28,12 @@ class ThreadPage extends Component {
     console.log(width, height, PixelRatio.get())
     return (
       <View style={{flex: 1, marginTop: 30}}>
+      <StatusBar
+       backgroundColor="#8498db"
+       barStyle="light-content"
+      />
+
+
       <Messages/>
         <View style={{ backgroundColor: '#DDD', margin: 10}}>
 

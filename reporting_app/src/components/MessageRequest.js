@@ -3,17 +3,26 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions
+  Dimensions,
+  Image
 } from 'react-native';
 
 export default class reporting_app extends Component {
   render() {
+    var img;
+    if (this.props.image) {
+      img = <Image
+          style={{width: width-20, height: width/2}}
+          source={{uri: this.props.image}}
+        />
+    }
     return (
       <View style={styles.view}>
         <View style={styles.container}>
-          <Text style={styles.dateTime}> {this.props.dateTime}  </Text>
+          {img}
           <Text style={styles.text}> {this.props.text} </Text>
         </View>
+        <Text style={styles.dateTime}> {this.props.dateTime}  </Text>
       </View>
     );
   }
@@ -22,22 +31,24 @@ export default class reporting_app extends Component {
 var {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#2c3e50',
+    backgroundColor: '#8498db',
     margin: 10,
-    marginRight: (width * 0.2),
+    marginBottom: 0,
+    marginLeft: (width * 0.2),
     borderRadius: 7
   },
   text: {
     color: 'white',
-    fontSize: 20
+    fontSize: 20,
+    marginBottom: 0
   },
   dateTime: {
-    color: 'white',
-    position: 'absolute',
+    backgroundColor: '#ecf0f1',
+    width: width,
+    opacity: 1,
+    color: 'black',
     fontSize: 15,
-    left: 0
+    left: (width*0.93)
   },
   view: {
     width: width,

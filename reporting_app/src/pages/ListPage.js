@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {
-  Button,
   Text,
   ListView,
   StyleSheet,
-  View
+  View,
+  StatusBar
 } from 'react-native';
 import ThreadCard from '../components/ThreadCard'
 
@@ -32,15 +32,16 @@ class ListPage extends Component {
   render() {
     return (
       <View style={{flex: 1, marginTop: 30}}>
+
+      <StatusBar
+       backgroundColor="#8498db"
+       barStyle="light-content"
+      />
+
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderThreadCard}
         />
-        <View style={{ backgroundColor: '#DDD', margin: 10}}>
-          <Button title='Neuer Bericht' onPress={() => {
-            this.props.navigator.push({index: 1})
-          }} />
-        </View>
       </View>
     );
   }
