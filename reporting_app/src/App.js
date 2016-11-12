@@ -9,24 +9,49 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  ScrollView,
+  Navigator,
+  TouchableHighlight
 } from 'react-native';
+
+import Messages from './components/Messages';
+
+
+var NavigationBarRouteMapper = {
+  Title: function(route, navigator){
+    return (
+      <Text style={styles.text}> {route.title} </Text>
+    );
+  },
+
+  LeftButton: function(){
+    return null
+  },
+
+  RightButton: function(){
+    return null
+  }
+};
 
 export default class reporting_app extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+
+        <Navigator
+        initialRoute={{ title: 'Awesome Scene', index: 0 }}
+        renderScene={(route, navigator) =>
+          <Messages style={styles.container}/>
+        }
+        navigationBar={
+          <Navigator.NavigationBar
+          routeMapper={NavigationBarRouteMapper}
+          style={{backgroundColor: 'red',
+                  height: 45}}
+          />
+        }
+        style={styles.nav}/>
+
     );
   }
 }
@@ -34,9 +59,9 @@ export default class reporting_app extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#bdc3c7',
+    margin: 10
+
   },
   welcome: {
     fontSize: 20,
@@ -48,6 +73,12 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  text: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 40
+
+  }
 });
 
 AppRegistry.registerComponent('reporting_app', () => reporting_app);
