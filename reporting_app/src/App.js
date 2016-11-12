@@ -15,7 +15,8 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   Dimensions,
-  StatusBar
+  StatusBar,
+  Platform
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -27,21 +28,23 @@ import { reportsChanged } from './actions/index.js';
 import { connect } from 'react-redux';
 
 
+var navBarMargin = (Platform.OS === 'ios') ? 0:5;
 var NavigationBarRouteMapper = {
   Title: function(route, navigator){
     return (
-      <Text style={styles.titleText}> {route.title} </Text>
+      <Text style={[styles.titleText,{margin: navBarMargin}]}> {route.title} </Text>
     );
   },
 
   LeftButton: function(route, navigator){
     if (route.index != 0){
+      var iconSize = (Platform.OS === 'ios') ? 20:30;
       return (
         <TouchableOpacity
           onPress={() => navigator.pop()}
           style={styles.navBarRightButton}>
-          <View style={{marginLeft: 10, marginTop: 5}}>
-            <Icon name="chevron-circle-left" size={30} color="white" style={{left: 0}} />
+          <View style={{marginLeft: 10, marginTop: navBarMargin}}>
+            <Icon name="chevron-circle-left" size={iconSize} color="white" style={{left: 0}} />
           </View>
         </TouchableOpacity>
       );
@@ -50,13 +53,14 @@ var NavigationBarRouteMapper = {
 
   RightButton: function(route, navigator){
     if (route.index === 0){
+      var iconSize = (Platform.OS === 'ios') ? 20:30;
       return (
         <TouchableOpacity
           //onPress={() => navigator.push()}
           style={styles.navBarRightButton}>
 
-          <View style={{marginRight: 40, marginTop: 5}}>
-            <Icon name="info-circle" size={30} color="white" style={{left: 0}} />
+          <View style={{marginRight: 30, marginTop: navBarMargin}}>
+            <Icon name="info-circle" size={iconSize} color="white" style={{left: 0}} />
           </View>
 
         </TouchableOpacity>
@@ -109,16 +113,16 @@ class reporting_app extends Component {
 }
 
 var {height, width} = Dimensions.get('window');
+var titleTextHeight = (Platform.OS === 'ios') ? 16:30;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 16
   },
   titleText: {
-    marginTop: 10,
-    marginLeft: (width*0.4),
+    textAlign: 'center',
     color: 'white',
-    fontSize: 30
+    fontSize: titleTextHeight
   },
   navBarText: {
     backgroundColor: 'white',

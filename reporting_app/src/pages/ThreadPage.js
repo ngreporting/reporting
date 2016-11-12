@@ -8,10 +8,12 @@ import {
   TextInput,
   View,
   PixelRatio,
-  StatusBar
+  StatusBar,
+  TouchableOpacity
 } from 'react-native';
 import ThreadCard from '../components/ThreadCard'
 import Messages from '../components/Messages'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class ThreadPage extends Component {
 
@@ -35,14 +37,21 @@ class ThreadPage extends Component {
 
 
       <Messages/>
-        <View style={{ backgroundColor: '#DDD', margin: 10}}>
+        <View style={{ backgroundColor: 'white',borderRadius: 7 , margin: 10, width: (width*0.98), flexDirection: 'row'}}>
 
           <TextInput
             autoFocus
-            style={{height: textInputHeight}}
+            style={{height: textInputHeight, width: (width*0.95)}}
             onChangeText={(message) => this.setState({message})}
             value={this.state.message} />
+
+            <TouchableOpacity
+              onPress={() => alert(this.state.message)}
+              style={styles.navBarRightButton}>
+              <Icon name="paper-plane" size={30} color="#8498db" style={{}}/>
+            </TouchableOpacity>
         </View>
+
       </View>
     );
   }

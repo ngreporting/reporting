@@ -32,7 +32,7 @@ var {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#8498db',
-    margin: 10,
+    margin: 20,
     marginBottom: 0,
     marginLeft: (width * 0.2),
     borderRadius: 7
