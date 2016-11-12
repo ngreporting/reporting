@@ -12,7 +12,8 @@ import {
   View,
   ScrollView,
   Navigator,
-  TouchableHighlight
+  TouchableHighlight,
+  TouchableOpacity
 } from 'react-native';
 
 import Messages from './components/Messages';
@@ -26,7 +27,15 @@ var NavigationBarRouteMapper = {
   },
 
   LeftButton: function(){
-    return null
+    return (
+      <TouchableOpacity
+        onPress={() => navigator.push(newRandomRoute())}
+        style={styles.navBarRightButton}>
+        <Text style={[styles.navBarText, styles.navBarButtonText]}>
+           Zurück
+        </Text>
+      </TouchableOpacity>
+    );
   },
 
   RightButton: function(){
