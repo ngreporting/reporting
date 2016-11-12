@@ -5,10 +5,14 @@
   "license": "MIT",
   "scripts": {
     "test": "node test.js",
-    "start": "watch 'npm test' ."
+    "start": "watch 'npm test' .",
+    "postinstall": "browserify reporting_client.js -o dist.js -t [ babelify --presets [ es2015 react ] ]"
   },
   "dependencies": {
-    "firebase": "^3.6.0"
+    "firebase": "^3.6.0",
+    "babel-preset-react-es2015": "^1.2.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.1"
   },
   "devDependencies": {
     "watch": "^1.0.1"
