@@ -19,44 +19,53 @@ testAsyncDefined = (testFn, wait, name) => {
 }
 
 testAsyncDefined((result) => {
-    client.onReportsChange((reps)=>{
+    client.monitorReports((reps)=>{
         result(reps)
     })
-}, 100, 'onReportsChange')
+}, 100, 'monitorReports')
 
 testAsyncDefined((result) => {
-    client.onThreadChange('a', (thread)=>{
+    client.monitorThread('a', (thread)=>{
         result(thread)
     })
-}, 100, 'onThreadChange')
+}, 100, 'monitorThread')
 
 testAsyncDefined((result) => {
-    client.onMessageChange('a', (thread)=>{
+    client.monitorMessage('a', (thread)=>{
         result(thread)
     })
-}, 100, 'onMessageChange')
+}, 100, 'monitorMessage')
 
 testAsyncDefined((result) => {
-    client.onUserChange('a', (thread)=>{
+    client.monitorReport('a', (thread)=>{
         result(thread)
     })
-}, 100, 'onUserChange')
+}, 100, 'monitorReport')
 
 testAsyncDefined((result) => {
-    client.onAttachmentChange('a', (thread)=>{
+    client.monitorUser('a', (thread)=>{
         result(thread)
     })
-}, 100, 'onAttachmentChange')
+}, 100, 'monitorUser')
 
 if (typeof client.addReport({}) != 'string') {
     console.log('addReport should return new id')
     failed = true
 }
 
-if (typeof client.addAttachment({}) != 'string') {
-    console.log('addAttachment should return new id')
-    failed = true
-}
+var calls = 0, url
+client.uploadAttachment('base64data', 'jpg', (percent) => {
+    console.log('called with percent: ' + (percent * 100))
+    calls += 1
+}, (u) => {
+    url = u
+})
+setTimeout(() => {
+    if (calls < 6 || typeof url != 'string') {
+        failed = true
+        console.log('Expected progress to be called 6 times and url to be set')
+    }
+}, 6000)
 
 if (typeof client.addMessage({}) != 'string') {
     console.log('addMessage should return new id')
@@ -69,4 +78,4 @@ setTimeout(()=> {
     } else {
         console.log('SUCCESS')
     }
-}, 200)
+}, 7000)
