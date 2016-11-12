@@ -6,9 +6,11 @@ import {
   ListView,
   StyleSheet,
   TextInput,
-  View
+  View,
+  PixelRatio
 } from 'react-native';
 import ThreadCard from '../components/ThreadCard'
+import Messages from '../components/Messages'
 
 class ThreadPage extends Component {
 
@@ -21,13 +23,16 @@ class ThreadPage extends Component {
 
   render() {
     var {width, height} = Dimensions.get('window')
-    console.log(width, height)
+    var textInputHeight = width < 1000? 20:40;
+    console.log(width, height, PixelRatio.get())
     return (
       <View style={{flex: 1, marginTop: 30}}>
+      <Messages/>
         <View style={{ backgroundColor: '#DDD', margin: 10}}>
-          <TextInput 
+
+          <TextInput
             autoFocus
-            style={{height: 20}} 
+            style={{height: textInputHeight}}
             onChangeText={(message) => this.setState({message})}
             value={this.state.message} />
         </View>
