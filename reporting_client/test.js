@@ -1,6 +1,6 @@
-var Client = require('./reporting_client.js')
+var ReportingClient = require('./reporting_client.js')
 
-var client = new Client.ReportingClient('a', 'b')
+var client = new ReportingClient('a', 'b')
 
 var failed = false
 

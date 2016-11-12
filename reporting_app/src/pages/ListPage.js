@@ -6,6 +6,7 @@ import {
   View,
   StatusBar
 } from 'react-native';
+import { connect } from 'react-redux'
 import ThreadCard from '../components/ThreadCard'
 
 class ListPage extends Component {
@@ -50,4 +51,13 @@ class ListPage extends Component {
 const styles = StyleSheet.create({
 });
 
-export default ListPage
+
+
+function mapStateToProps (state) {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+
+export default connect(mapStateToProps)(ListPage)

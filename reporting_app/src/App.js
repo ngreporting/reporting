@@ -22,6 +22,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ListPage from './pages/ListPage';
 import ThreadPage from './pages/ThreadPage';
 import Messages from './components/Messages';
+import ReportingClient from 'reporting_client';
+import { reportsChanged } from './actions/index.js';
+import { connect } from 'react-redux';
 
 
 var NavigationBarRouteMapper = {
@@ -62,7 +65,17 @@ var NavigationBarRouteMapper = {
 }
 };
 
-export default class reporting_app extends Component {
+class reporting_app extends Component {
+  constructor (props) {
+    super(props)
+    this.client = new ReportingClient()
+  }
+
+  componentDidMount () {
+    this.client.onReportsChange((reports) => {
+        this.props.reportsChanged(reports)
+    })
+  }
 
   renderScene(route, navigator) {
     if (route.index === 0) {
@@ -117,4 +130,11 @@ const styles = StyleSheet.create({
   }
 });
 
-AppRegistry.registerComponent('reporting_app', () => reporting_app);
+function mapStateToProps (state) {
+  return {}
+}
+var connectedReportingApp = connect(mapStateToProps, { reportsChanged })(reporting_app)
+
+
+
+export default connectedReportingApp
