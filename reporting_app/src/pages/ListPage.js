@@ -6,24 +6,26 @@ import {
   View,
   StatusBar
 } from 'react-native';
-import { connect } from 'react-redux'
-import ThreadCard from '../components/ThreadCard'
+import { connect } from 'react-redux';
+import ThreadCard from '../components/ThreadCard';
+import { reportsChanged } from '../actions/index.js';
+import ReportingClient from 'reporting_client';
 
 class ListPage extends Component {
-  constructor() {
-    super();
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows([{
-        text: 'Hier ein längerer Text über ein tolles Ereignis.',
-        responderName: 'SWR | Werner Pastula',
-        responderCount: 3
-      }, {
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Laudtee_Meenikunnos.jpg/800px-Laudtee_Meenikunnos.jpg',
-        responderName: 'SWR | Werner Pastula',
-        responderCount: 3
-      }]),
-    };
+  constructor(props) {
+    super(props);
+    this.reporting_client = new ReportingClient();
+    this.state = {reports:[]};
+  }
+
+  reportsChanged = (reports) =>  {
+    this.setState({
+      reports
+    })
+  }
+
+  componentDidMount(){
+    this.reporting_client.onReportsChange(this.reportsChanged);
   }
 
   renderThreadCard = (thread) => {
@@ -31,6 +33,9 @@ class ListPage extends Component {
   }
 
   render() {
+    console.log(this.state.reports);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var dataSource = ds.cloneWithRows(this.state.reports);
     return (
       <View style={{flex: 1, marginTop: 30}}>
 
@@ -40,10 +45,12 @@ class ListPage extends Component {
       />
 
         <ListView
-          dataSource={this.state.dataSource}
+          dataSource={dataSource}
           renderRow={this.renderThreadCard}
         />
       </View>
+
+
     );
   }
 }
@@ -55,9 +62,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps (state) {
   return {
-    currentUser: state.currentUser
+    reports: state.reports
   }
 }
 
-
-export default connect(mapStateToProps)(ListPage)
+export default connect(mapStateToProps, {reportsChanged})(ListPage)
