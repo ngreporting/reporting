@@ -9,6 +9,7 @@ import {
   View
 } from 'react-native';
 import ReportClient from 'reporting_client';
+import ThreadRow from './ThreadRow';
 
 class ReportCard extends Component {
 
@@ -17,12 +18,12 @@ class ReportCard extends Component {
     this.ReportClient = new ReportClient();
   }
 
-  componentDidMount(){
-    this.ReportClient.monitorReport(this.props.reportId);
+  monitorReport = (report) => {
+    this.setState({report});
   }
 
-  onPress = (event) => {
-    event
+  componentDidMount(){
+    this.ReportClient.monitorReport(this.props.reportId, this.monitorReport);
   }
 
   render() {
@@ -38,6 +39,13 @@ class ReportCard extends Component {
       header = <Text style={{padding: 10, color: '#333'}}>{this.props.text}</Text>
     }
 
+    var threadRows = []
+    if (this.props.threads) {
+      this.props.threads.map((threadId) => {
+        threadRows.push(<ThreadRow threadId={threadId} />)
+      })
+    }
+
     return (
       <TouchableHighlight
         onPress={() => {
@@ -46,10 +54,7 @@ class ReportCard extends Component {
         style={{margin: 10, marginBottom: 0, backgroundColor: '#DDD'}}>
         <View>
           { header }
-          <View style={{padding: 10, backgroundColor: '#333', flexDirection: 'row', justifyContent: 'space-between'}}>
-            <Text style={{color: '#DDD'}}>{this.props.responderName}</Text>
-            <Text style={{color: '#DDD', fontWeight: 'bold'}}>{this.props.responderCount}</Text>
-          </View>
+          { threadRows }
         </View>
       </TouchableHighlight>
     );

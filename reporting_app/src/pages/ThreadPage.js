@@ -11,7 +11,6 @@ import {
   StatusBar,
   TouchableOpacity
 } from 'react-native';
-import ThreadCard from '../components/ThreadCard'
 import Messages from '../components/Messages'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ReqeportingClient from 'reporting_client';
