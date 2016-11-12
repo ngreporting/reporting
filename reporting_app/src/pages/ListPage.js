@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Button,
   Text,
   ListView,
   StyleSheet,
@@ -35,6 +36,11 @@ class ListPage extends Component {
           dataSource={this.state.dataSource}
           renderRow={this.renderThreadCard}
         />
+        <View style={{ backgroundColor: '#DDD', margin: 10}}>
+          <Button title='Neuer Bericht' onPress={() => {
+            this.props.navigator.push({index: 1})
+          }} />
+        </View>
       </View>
     );
   }

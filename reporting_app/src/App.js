@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 
 import ListPage from './pages/ListPage';
+import ThreadPage from './pages/ThreadPage';
 import Messages from './components/Messages';
 
 
@@ -65,7 +66,7 @@ export default class reporting_app extends Component {
     }
 
     if (route.index === 1) {
-      return <Messages />
+      return <ThreadPage />
     }
   }
 
