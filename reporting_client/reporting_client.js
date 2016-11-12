@@ -58,9 +58,10 @@ class ReportingClient {
         // })
     }
 
-    // Register change handler for changes in users reports. Will be called
-    // multiple times.
-    onReportsChange (cb) {
+    // Calls cb with all reports visible to the logged in user (all reports
+    // for journalists, own reports for any one else). Returns a function to
+    // cancle monitoring.
+    monitorReports (cb) {
         setTimeout(()=>{
             cb({
                 'rep1': {
@@ -91,10 +92,12 @@ class ReportingClient {
                 }
             })
         }, 20)
+        return () => {}
     }
 
-    // Register change handler for changes on given thread
-    onThreadChange(thread, cb) {
+    // Calls cb for every change of the given thread. Returns a function to
+    // cancle monitoring.
+    monitorThread(thread, cb) {
         setTimeout(()=>{
             cb({
                 [thread]: {
@@ -104,10 +107,12 @@ class ReportingClient {
                 }
             })
         }, 20)
+        return () => {}
     }
 
-    // Register change handler for changes on given message
-    onMessageChange(message, cb) {
+    // Calls cb for every change of the given message. Returns a function to
+    // cancle monitoring.
+    monitorMessage(message, cb) {
         setTimeout(()=>{
             cb({
                 [message]: {
@@ -117,10 +122,31 @@ class ReportingClient {
                 }
             })
         }, 20)
+        return () => {}
+    }
+
+    // Monitor specific report. Returns a function to
+    // cancle monitoring.
+    monitorReport(report, cb) {
+        setTimeout(()=>{
+            cb({
+                [report]: {
+                    text: 'Toller Bericht',
+                    author: 'anon1',
+                    date: 1478905163895,
+                    attachments: ['a', 'b'],
+                    position: {
+                        lat: 55.0,
+                        lng: 40.0
+                    }
+                }
+            })
+        }, 20)
+        return () => {}
     }
 
     // Register change handler for changes on given user
-    onUserChange(user, cb) {
+    monitorUser(user, cb) {
         setTimeout(()=>{
             cb({
                 [user]: {
@@ -129,35 +155,47 @@ class ReportingClient {
                 }
             })
         }, 20)
+        return () => {}
     }
 
-    onAttachmentChange(attachment, cb) {
-        setTimeout(()=>{
-            cb({
-                [attachment]: {
-                    type: 'image/jpg',
-                    url: 'https://source.unsplash.com/random',
-                    progress: .7,
-                    uploaded: false
-                }
-            })
-        }, 20)
+    // Add new message to thred. Returns new uid.
+    addMessage(thread, text) {
+        // todo
+        return 'newKey'
     }
 
-    // Add report. Returns new ID
+    // Add new report. Returns uid
     addReport(report) {
-        // TODO
-        return 'newRep'
+        // todo
+        return 'newReport'
     }
 
-    // Add attachment. Returns new ID
-    addAttachment(attachment) {
-        return 'newAttachment'
+    // Upload attachment with base64 encoded data and given extension
+    // (e.g. 'jpg')
+    // Calls progressCb multiple times with one parameter between 0.0 ans 1.0
+    // Calls successCb one time with download URL as parameter
+    uploadAttachment(data, extension, progressCb, successCb) {
+        var counter = 5
+        var intv = setInterval(() => {
+            progressCb(1.0 - (counter * 0.2))
+            counter -= 1
+            if (counter < 0) {
+                clearInterval(intv)
+            }
+        }, 1000)
+        setTimeout(() => {
+            progressCb(1.0)
+            successCb('https://source.unsplash.com/random')
+        }, 5500)
     }
 
-    // Add message to thread. Returns new ID
-    addMessage(thread, message) {
-        return 'newMsg'
+    //
+    updateReport(uid, report) {
+        //todo
+    }
+
+    updateMessage(uid, message) {
+        //todo
     }
 }
 
