@@ -1,6 +1,6 @@
 import { NOOP } from '../actions/index.js'
 import { combineReducers } from 'redux'
-import userReducer from './user-handler'
+import {loginHandlers, reportsHandlers} from './handlers.js'
 
 function dispatchReducer(handlers) {
     return (state, action) => {
@@ -10,7 +10,8 @@ function dispatchReducer(handlers) {
 }
 
 const RootReducer = combineReducers({
-  currentUser: dispatchReducer(userReducer)
+  login: dispatchReducer(loginHandlers),
+  reports: dispatchReducer(reportsHandlers)
 })
 
 export default RootReducer
