@@ -13,7 +13,8 @@ import {
   ScrollView,
   Navigator,
   TouchableHighlight,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 
 import ListPage from './pages/ListPage';
@@ -23,25 +24,37 @@ import Messages from './components/Messages';
 var NavigationBarRouteMapper = {
   Title: function(route, navigator){
     return (
-      <Text style={styles.text}> {route.title} </Text>
+      <Text style={styles.titleText}> {route.title} </Text>
     );
   },
 
-  LeftButton: function(){
-    return (
-      <TouchableOpacity
-        onPress={() => navigator.push(newRandomRoute())}
-        style={styles.navBarRightButton}>
-        <Text style={[styles.navBarText, styles.navBarButtonText]}>
-           Zurück
-        </Text>
-      </TouchableOpacity>
-    );
+  LeftButton: function(route, navigator){
+    if (route.index != 0){
+      return (
+        <TouchableOpacity
+          onPress={() => navigator.pop()}
+          style={styles.navBarRightButton}>
+          <Text style={[styles.navBarText, styles.navBarButtonText]}>
+             {`< Zurück`}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
   },
 
-  RightButton: function(){
-    return null
+  RightButton: function(route, navigator){
+    if (route.index === 0){
+      return (
+        <TouchableOpacity
+          //onPress={() => navigator.push()}
+          style={styles.navBarRightButton}>
+          <Text style={[styles.navBarText, styles.navBarButtonText]}>
+             INFO
+          </Text>
+        </TouchableOpacity>
+      );
   }
+}
 };
 
 export default class reporting_app extends Component {
@@ -60,7 +73,7 @@ export default class reporting_app extends Component {
   render() {
     return (
       <Navigator
-        initialRoute={{index: 0 }}
+        initialRoute={{index: 0, title: 'Olepsy'}}
         renderScene={this.renderScene}
         style={styles.container}
         navigationBar={
@@ -75,27 +88,21 @@ export default class reporting_app extends Component {
   }
 }
 
+var {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 16
-
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  text: {
-    textAlign: 'center',
+  titleText: {
+    marginTop: 10,
+    marginLeft: (width*0.4),
     color: 'white',
     fontSize: 30
-
+  },
+  navBarText: {
+    color: 'blue',
+    fontSize: 30
   }
 });
 

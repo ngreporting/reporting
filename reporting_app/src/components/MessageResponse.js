@@ -11,13 +11,8 @@ export default class reporting_app extends Component {
     return (
       <View style={styles.view}>
         <View style={styles.container}>
-          <Text style={styles.dateTime}> 11/11/2016 23:59  </Text>
-          <Text style={styles.text}> {
-            `
-             Lorem ipsum dolor sit amet,
-             consetetur sadipscing elitr,
-             sed diam nomun dnsaoidas tomeod indnd.
-            `}</Text>
+          <Text style={styles.dateTime}> {this.props.dateTime}  </Text>
+          <Text style={styles.text}> {this.props.text}</Text>
         </View>
       </View>
     );

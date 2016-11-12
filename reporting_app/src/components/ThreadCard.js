@@ -29,9 +29,9 @@ class ThreadCard extends Component {
     }
 
     return (
-      <TouchableHighlight 
+      <TouchableHighlight
         onPress={() => {
-          this.props.navigator.push({index: 1})
+          this.props.navigator.push({index: 1, title: 'SWR 3'})
         }}
         style={{margin: 10, marginBottom: 0, backgroundColor: '#DDD'}}>
         <View>
