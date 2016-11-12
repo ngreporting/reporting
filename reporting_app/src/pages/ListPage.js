@@ -38,7 +38,7 @@ class ListPage extends Component {
         />
         <View style={{ backgroundColor: '#DDD', margin: 10}}>
           <Button title='Neuer Bericht' onPress={() => {
-            console.log("Neuer Bericht")
+            this.props.navigator.push({index: 1})
           }} />
         </View>
       </View>
