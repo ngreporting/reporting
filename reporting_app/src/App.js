@@ -75,11 +75,7 @@ class reporting_app extends Component {
     this.client = new ReportingClient()
   }
 
-  componentDidMount () {
-    this.client.onReportsChange((reports) => {
-        this.props.reportsChanged(reports)
-    })
-  }
+
 
   renderScene(route, navigator) {
     if (route.index === 0) {

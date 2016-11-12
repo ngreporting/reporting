@@ -14,6 +14,7 @@ import {
 import ThreadCard from '../components/ThreadCard'
 import Messages from '../components/Messages'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ReqeportingClient from 'reporting_client';
 
 class ThreadPage extends Component {
 
@@ -22,6 +23,7 @@ class ThreadPage extends Component {
     this.state = {
       message: '...'
     }
+    this.ReportingClient = new ReportingClient();
   }
 
   render() {
@@ -46,7 +48,7 @@ class ThreadPage extends Component {
             value={this.state.message} />
 
             <TouchableOpacity
-              onPress={() => alert(this.state.message)}
+              onPress={() => this.ReportingClient.addMessage(1, this.state.message)}
               style={styles.navBarRightButton}>
               <Icon name="paper-plane" size={30} color="#8498db" style={{}}/>
             </TouchableOpacity>

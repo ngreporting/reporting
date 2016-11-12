@@ -8,8 +8,18 @@ import {
   StyleSheet,
   View
 } from 'react-native';
+import ReportClient from 'reporting_client';
 
-class ThreadCard extends Component {
+class ReportCard extends Component {
+
+  constructor (props){
+    super(props);
+    this.ReportClient = new ReportClient();
+  }
+
+  componentDidMount(){
+    this.ReportClient.monitorReport(this.props.reportId);
+  }
 
   onPress = (event) => {
     event
@@ -52,4 +62,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ThreadCard
+export default ReportCard

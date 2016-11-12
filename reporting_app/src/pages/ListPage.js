@@ -7,7 +7,7 @@ import {
   StatusBar
 } from 'react-native';
 import { connect } from 'react-redux';
-import ThreadCard from '../components/ThreadCard';
+import ReportCard from '../components/ReportCard';
 import { reportsChanged } from '../actions/index.js';
 import ReportingClient from 'reporting_client';
 
@@ -25,11 +25,12 @@ class ListPage extends Component {
   }
 
   componentDidMount(){
-    this.reporting_client.onReportsChange(this.reportsChanged);
+    this.reporting_client.monitorReports(this.reportsChanged);
   }
 
-  renderThreadCard = (thread) => {
-    return (<ThreadCard {...thread} navigator={this.props.navigator} />)
+
+  renderReportCard = (report) => {
+    return (<ReportCard {...report} navigator={this.props.navigator} />)
   }
 
   render() {
@@ -46,7 +47,7 @@ class ListPage extends Component {
 
         <ListView
           dataSource={dataSource}
-          renderRow={this.renderThreadCard}
+          renderRow={this.renderReportCard}
         />
       </View>
 
