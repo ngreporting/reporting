@@ -110,7 +110,9 @@ class ReportingClient {
     // for journalists, own reports for any one else). Returns a function to
     // cancle monitoring.
     monitorReports (cb) {
-        return this._monitor('reports', cb, ref => ref.orderByChild('author').equalTo(this.user.uid))
+        return this._monitor('reports', (reports) => {
+            cb(Object.keys(reports).sort().map(key => reports[key]))
+        }, ref => ref.orderByChild('author').equalTo(this.user.uid))
     }
 
     // Calls cb for every change of the given thread. Returns a function to
@@ -136,27 +138,32 @@ class ReportingClient {
         return this._monitor(`users/${user}`, cb)
     }
 
-    _add(category, val, reference = undefined) {
-        const ref = reference || this.firebase.database().ref('category').push()
-        if (this._delay(this._add.bind(this, category, val, ref))) {
+    // Add new message to thred. Returns new uid.
+    addMessage(thread, text, ref = this.firebase.database().ref('messages').push()) {
+        if (this._delay(this.addMessage.bind(this, thread, text, ref))) {
             return ref.key
         }
-        ref.set(val)
-        return ref.key
-    }
-
-    // Add new message to thred. Returns new uid.
-    addMessage(thread, text) {
-        return this._add('messages', {
+        ref.set({
             author: this.user.uid,
             date: Date.now(),
-            text: text
+            text: text,
+            thread: thread
+        }).then(() => {
+            this.firebase.database().ref(`threads/${thread}/messages`).push(ref.key)
         })
+        return ref
     }
 
     // Add new report. Returns uid
-    addReport(report) {
-        return this._add('reports', report)
+    addReport(report, ref = this.firebase.database().ref('reports').push()) {
+        if (this._delay(this.addReport.bind(this, report, ref))) {
+            return ref.key
+        }
+        ref.set(Object.assign({}, report, {
+            author: this.user.uid,
+            date: Date.now()
+        }))
+        return ref.key
     }
 
     // Upload attachment with base64 encoded data and given extension
