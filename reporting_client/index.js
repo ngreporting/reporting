@@ -104,6 +104,7 @@ class ReportingClient {
                     report: 'rep2',
                     responder: 'user1'
                     messages: ['mes1', 'mes2']
+                }
             })
         }, 20)
     }
@@ -138,7 +139,9 @@ class ReportingClient {
             cb({
                 [attachment]: {
                     type: 'image/jpg',
-                    url: 'https://source.unsplash.com/random'
+                    url: 'https://source.unsplash.com/random',
+                    progress: .7,
+                    uploaded: false
                 }
             })
         }, 20)
