@@ -1,5 +1,4 @@
-import config from 'config.js'
-import randomBytes from 'react-native-randombytes'
+const config = require('./config.js')
 
 function version() {
   return '0.1'
@@ -9,7 +8,7 @@ var instance
 
 class ReportingClient {
 
-    constructor () {
+    constructor (username, password) {
         if (!instance) {
             // this.firebase = firebase.initializeApp(config)
             // this.currentUser = Object.assign({}, emptyUser)
@@ -18,7 +17,7 @@ class ReportingClient {
         return instance
     }
 
-    _subscribe = (currentUser) => {
+    _subscribe (currentUser) {
         // this.firebase.database().ref('users/' + currentUser.uid).on('value', (snapshot) => {
             // this.currentUser = Object.assign({}, emptyUser, {uid: currentUser.uid}, snapshot.val())
             // this.actions.signedIn(this.currentUser)
@@ -63,12 +62,12 @@ class ReportingClient {
 
     // Register change handler for changes in users reports. Will be called
     // multiple times.
-    getReports (cb) {
+    onReportsChange (cb) {
         setTimeout(()=>{
             cb({
                 'rep1': {
                     text: 'Toller Bericht',
-                    author: 'anon1'
+                    author: 'anon1',
                     date: 1478905163895,
                     attachments: ['a', 'b'],
                     position: {
@@ -85,7 +84,7 @@ class ReportingClient {
                         lng: 40.0
                     },
                     threads: ['a', 'b']
-                }
+                },
                 'rep3': {
                     text: 'Toller Bericht 3',
                     author: 'anon1',
@@ -102,7 +101,7 @@ class ReportingClient {
             cb({
                 [thread]: {
                     report: 'rep2',
-                    responder: 'user1'
+                    responder: 'user1',
                     messages: ['mes1', 'mes2']
                 }
             })
@@ -164,4 +163,4 @@ class ReportingClient {
     }
 }
 
-export { version }
+module.exports = { version, ReportingClient }

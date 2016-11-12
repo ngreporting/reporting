@@ -1,9 +1,14 @@
 {
   "name": "reporting_client",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "reporting_client.js",
   "license": "MIT",
+  "scripts": {
+    "test": "node test.js",
+    "start": "watch 'npm test' ."
+  },
+  "dependencies": {},
   "devDependencies": {
-    "react-native-randombytes": "github:jnuine/react-native-randombytes#custom"
+    "watch": "^1.0.1"
   }
 }
