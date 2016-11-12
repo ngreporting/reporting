@@ -1,0 +1,52 @@
+.favList {
+    overflow: auto;
+    border-bottom: 5px solid grey;
+    max-height: 200px;
+    cursor: pointer;
+    flex:1;
+}
+.unansweredList {
+    overflow: auto;
+    height: 50%;
+    padding-top:15px;
+
+}
+.favElement {
+    background-color: white;
+    margin: 0 0 5px 5px;
+    padding: 5px;
+    color: #2c3e50;
+}
+.listElement {
+    background-color: white;
+    margin: 5px;
+    padding: 5px;
+    color: #2c3e50;
+    opacity: 0.4;
+    cursor: pointer;
+    transition: opacity 1s;
+
+}
+.listElement:hover {
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+h3 {
+    font-size: 18px;
+}
+p {
+    font-size:14px;
+    margin: 5px 0;
+}
+span {
+    font-size: 10px;
+    margin-right:5px;
+}
+.attachment {
+    float:right;
+    margin-right: 25px;
+}
+i {
+    margin-right: 5px;
+}

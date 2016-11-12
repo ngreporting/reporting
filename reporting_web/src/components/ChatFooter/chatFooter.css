@@ -1,0 +1,16 @@
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.footer {
+    padding:5px 10px;
+}
+.footer i {
+    padding-left: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+.chatInput {
+    width: 85%;
+}

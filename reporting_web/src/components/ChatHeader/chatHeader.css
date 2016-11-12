@@ -1,0 +1,9 @@
+ .actions {
+    margin-left: 20px;
+}
+
+ .actions i {
+     font-size: 28px;
+     margin:0 10px;
+     cursor: pointer;
+ }
