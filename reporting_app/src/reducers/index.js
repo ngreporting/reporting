@@ -5,7 +5,11 @@ import {loginHandlers, reportsHandlers} from './handlers.js'
 function dispatchReducer(handlers) {
     return (state, action) => {
         var handler = handlers[action.type] || handlers[NOOP]
-        return handler(state, action)
+        if (handler) {
+            return handler(state, action)
+        } else {
+            return state || {}
+        }
     }
 }
 

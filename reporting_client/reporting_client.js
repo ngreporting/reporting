@@ -1,20 +1,18 @@
-const config = require('./config.js')
-
-function version() {
-  return '0.1'
-}
-
 var instance
 
 class ReportingClient {
 
-    constructor (username, password) {
+    constructor (username, password, config) {
         if (!instance) {
             // this.firebase = firebase.initializeApp(config)
             // this.currentUser = Object.assign({}, emptyUser)
             instance = this
         }
         return instance
+    }
+
+    version () {
+        return '0.1'
     }
 
     _subscribe (currentUser) {
@@ -163,4 +161,4 @@ class ReportingClient {
     }
 }
 
-module.exports = { version, ReportingClient }
+module.exports = ReportingClient

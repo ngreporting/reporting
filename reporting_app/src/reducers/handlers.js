@@ -4,11 +4,11 @@
 
 import {
   SIGNED_IN, REPORTS_CHANGED, ADD_REPORT, THREAD_CHANGED, MESSAGE_CHANGED,
-  ADD_MESSAGE, USER_CHANGED, ATTACHEMENT_CHANGED, ADD_ATTACHMENT, ADD_MESSAGE
+  ADD_MESSAGE, USER_CHANGED, ATTACHEMENT_CHANGED, ADD_ATTACHMENT
 } from '../actions'
 
 const defaultLogin = {
-  uid: null
+  uid: null,
   loggedIn: false
 }
 
@@ -20,7 +20,7 @@ loginHandlers = {
       loggedIn: true
     }
   },
-  NOOP: (state, action) => (state || defaultUser)
+  NOOP: (state, action) => (state || defaultLogin)
 },
 reportsHandlers = {
   REPORTS_CHANGED: (state, action) => {
@@ -28,8 +28,5 @@ reportsHandlers = {
   },
   ADD_REPORT: {
     // TODO
-  }
-  NOOP: (state, action) => {
-    state || action
   }
 }
