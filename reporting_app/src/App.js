@@ -15,6 +15,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 
+import ListPage from './pages/ListPage';
 import Messages from './components/Messages';
 
 
@@ -35,22 +36,31 @@ var NavigationBarRouteMapper = {
 };
 
 export default class reporting_app extends Component {
+
+  renderScene(route, navigator) {
+    if (route.index === 0) {
+      return <ListPage navigator={navigator} />
+    }
+
+    if (route.index === 1) {
+      return <Messages />
+    }
+  }
+
+
   render() {
     return (
-
-        <Navigator
-        initialRoute={{ title: 'Awesome Scene', index: 0 }}
-        renderScene={(route, navigator) =>
-          <Messages style={styles.container}/>
-        }
+      <Navigator
+        initialRoute={{index: 0 }}
+        renderScene={this.renderScene}
+        style={styles.container}
         navigationBar={
           <Navigator.NavigationBar
           routeMapper={NavigationBarRouteMapper}
           style={{backgroundColor: 'red',
                   height: 45}}
           />
-        }
-        style={styles.nav}/>
+        }/>
 
     );
   }
@@ -59,8 +69,7 @@ export default class reporting_app extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#bdc3c7',
-    margin: 10
+    paddingTop: 16
 
   },
   welcome: {
@@ -76,7 +85,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     color: 'white',
-    fontSize: 40
+    fontSize: 30
 
   }
 });
