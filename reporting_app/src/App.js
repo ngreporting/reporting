@@ -26,6 +26,7 @@ import Messages from './components/Messages';
 import ReportingClient from 'reporting_client';
 import { reportsChanged } from './actions/index.js';
 import { connect } from 'react-redux';
+import config from '../config.js';
 
 
 var navBarMargin = (Platform.OS === 'ios') ? 0:5;
@@ -72,7 +73,8 @@ var NavigationBarRouteMapper = {
 class reporting_app extends Component {
   constructor (props) {
     super(props)
-    this.client = new ReportingClient()
+    this.client = new ReportingClient(config)
+    this.client.login(this.client.anonymousEmail('asasdfsad'), 'sdafasdf', false)
   }
 
 
