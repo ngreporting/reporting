@@ -1,0 +1,58 @@
+.pinnedMessage {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid grey;
+}
+.pinnedMessage .chat {
+    margin-right: 0;
+}
+.pinnedMessage i{
+    background-color: #3498db;
+    width: 30px;
+    height:30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+}
+.newDate{
+    text-align: center;
+    font-size: 14px;
+    color: #bdc3c7;
+    font-weight: 700;
+    margin: 20px 0;
+    clear: both;
+}
+
+.chat {
+    padding: 10px;
+    margin: 10px 20px;
+    max-width: 400px;
+    clear: both;
+}
+
+.chat span {
+    float: right;
+}
+.chat p {
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.guest {
+    float: left;
+}
+.guest p {
+    background-color: white;
+    color: #2c3e50;
+}
+.me {
+    float: right;
+}
+.me p {
+    background-color: #3498db;
+    color: white;
+}
