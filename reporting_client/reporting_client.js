@@ -100,11 +100,9 @@ class ReportingClient {
     monitorThread(thread, cb) {
         setTimeout(()=>{
             cb({
-                [thread]: {
-                    report: 'rep2',
-                    responder: 'user1',
-                    messages: ['mes1', 'mes2']
-                }
+                report: 'rep2',
+                responder: 'user1',
+                messages: ['mes1', 'mes2']
             })
         }, 20)
         return () => {}
@@ -115,11 +113,9 @@ class ReportingClient {
     monitorMessage(message, cb) {
         setTimeout(()=>{
             cb({
-                [message]: {
-                    text: 'nachfrage',
-                    author: (message == 'mes2') ? 'anon1' : 'user1',
-                    date: 1478909163895
-                }
+                text: 'nachfrage',
+                author: (message == 'mes2') ? 'anon1' : 'user1',
+                date: 1478909163895
             })
         }, 20)
         return () => {}
