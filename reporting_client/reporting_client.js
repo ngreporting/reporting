@@ -166,6 +166,21 @@ class ReportingClient {
         return ref.key
     }
 
+    // Add new thread. Returns uid
+    addThread(report, initialMessage, ref = this.firebase.database().ref('threads').push()) {
+        if (this._delay(this.addThread.bind(this, report, initialMessage, ref))) {
+            return ref.key
+        }
+        ref.set({
+            responder: this.user.uid,
+            report: report
+        }).then(() => {
+            const message = this.addMessage(ref.key, initialMessage)
+            this.firebase.database().ref(`threads/${ref.key}/messages`).push(message)
+        })
+        return ref.key
+    }
+
     // Upload attachment with base64 encoded data and given extension
     // (e.g. 'jpg')
     // Calls progressCb multiple times with one parameter between 0.0 ans 1.0
