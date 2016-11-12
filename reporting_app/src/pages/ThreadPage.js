@@ -13,16 +13,25 @@ import {
 } from 'react-native';
 import Messages from '../components/Messages'
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ReqeportingClient from 'reporting_client';
+import ReportingClient from 'reporting_client';
 
 class ThreadPage extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      message: '...'
+      message: '...',
+      thread: {}
     }
     this.ReportingClient = new ReportingClient();
+  }
+
+  monitorThread = (thread) => {
+    this.setState({thread})
+  }
+
+  componentDidMount() {
+    this.ReportingClient.monitorThread(this.props.threadId, this.monitorThread)
   }
 
   render() {

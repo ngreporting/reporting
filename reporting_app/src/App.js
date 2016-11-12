@@ -83,7 +83,7 @@ class reporting_app extends Component {
     }
 
     if (route.index === 1) {
-      return <ThreadPage />
+      return <ThreadPage threadId={route.threadId} />
     }
   }
 

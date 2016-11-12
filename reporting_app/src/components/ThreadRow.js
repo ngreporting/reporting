@@ -4,7 +4,8 @@ import {
   Text,
   View,
   Dimensions,
-  Image
+  Image,
+  TouchableHighlight
 } from 'react-native';
 import ReportClient from 'reporting_client'
 
@@ -28,10 +29,15 @@ export default class ThreadRow extends Component {
   render() {
     var count = this.state.thread.messages ? this.state.thread.messages.length : ''
     return (
-      <View style={{padding: 10, marginBottom: 1, backgroundColor: '#333', flexDirection: 'row', justifyContent: 'space-between'}}>
-      <Text style={{color: '#DDD'}}>{ this.state.thread.responder }</Text>
-      <Text style={{color: '#DDD'}}>{ count }</Text>
-      </View>
+      <TouchableHighlight
+        onPress={() => {
+          this.props.navigator.push({index: 1, title: 'SWR 3', threadId: this.props.threadId})
+        }}>
+        <View style={{padding: 10, marginBottom: 1, backgroundColor: '#333', flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={{color: '#DDD'}}>{ this.state.thread.responder }</Text>
+        <Text style={{color: '#DDD'}}>{ count }</Text>
+        </View>
+      </TouchableHighlight>
     );
   }
 }

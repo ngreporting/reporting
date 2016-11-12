@@ -42,21 +42,21 @@ class ReportCard extends Component {
     var threadRows = []
     if (this.props.threads) {
       this.props.threads.map((threadId) => {
-        threadRows.push(<ThreadRow threadId={threadId} />)
+        threadRows.push(<ThreadRow key={threadId} threadId={threadId} />)
       })
     }
 
     return (
-      <TouchableHighlight
-        onPress={() => {
-          this.props.navigator.push({index: 1, title: 'SWR 3'})
-        }}
+        <View
         style={{margin: 10, marginBottom: 0, backgroundColor: '#DDD'}}>
-        <View>
-          { header }
+          <TouchableHighlight
+            onPress={() => {
+              this.props.navigator.push({index: 1, title: 'SWR 3'})
+            }}>
+            { header }
+          </TouchableHighlight>
           { threadRows }
         </View>
-      </TouchableHighlight>
     );
   }
 }
