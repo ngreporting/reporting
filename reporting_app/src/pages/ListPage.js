@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import ReportCard from '../components/ReportCard';
 import { reportsChanged } from '../actions/index.js';
 import ReportingClient from 'reporting_client';
+import InputText from '../components/InputText';
 
 class ListPage extends Component {
   constructor(props) {
@@ -49,6 +50,11 @@ class ListPage extends Component {
           dataSource={dataSource}
           renderRow={this.renderReportCard}
         />
+
+
+        <InputText onPress={() => this.ReportingClient.addReport(this.state.message)}/>
+
+
       </View>
 
 

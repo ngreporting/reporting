@@ -14,6 +14,7 @@ import {
 import Messages from '../components/Messages'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ReportingClient from 'reporting_client';
+import InputText from '../components/InputText';
 
 class ThreadPage extends Component {
 
@@ -49,20 +50,7 @@ class ThreadPage extends Component {
 
 
       <Messages messages= {this.state.thread.messages}/>
-        <View style={{ backgroundColor: 'white',borderRadius: 7 , margin: 10, width: (width*0.98), flexDirection: 'row'}}>
-
-          <TextInput
-            autoFocus
-            style={{height: textInputHeight, width: (width*0.95)}}
-            onChangeText={(message) => this.setState({message})}
-            value={this.state.message} />
-
-            <TouchableOpacity
-              onPress={() => this.ReportingClient.addMessage(this.props.threadId, this.state.message)}
-              style={styles.navBarRightButton}>
-              <Icon name="paper-plane" size={30} color="#8498db" style={{}}/>
-            </TouchableOpacity>
-        </View>
+      <InputText onPress={() => this.ReportingClient.addMessage(this.props.threadId, this.state.message)}/>
 
       </View>
     );
