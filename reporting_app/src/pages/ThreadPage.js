@@ -24,7 +24,7 @@ class ThreadPage extends Component {
       message: '...',
       thread: {}
     }
-    this.ReportingClient = new ReportingClient();
+    this.client = new ReportingClient();
   }
 
   monitorThread = (thread) => {
@@ -32,7 +32,7 @@ class ThreadPage extends Component {
   }
 
   componentDidMount() {
-    this.ReportingClient.monitorThread(this.props.threadId, this.monitorThread)
+    this.client.monitorThread(this.props.threadId, this.monitorThread)
   }
 
   render() {
@@ -50,7 +50,7 @@ class ThreadPage extends Component {
 
 
       <Messages messages= {this.state.thread.messages}/>
-      <InputText onPress={() => this.ReportingClient.addMessage(this.props.threadId, this.state.message)}/>
+      <InputText onSend={(message) => this.client.addMessage(this.props.threadId, message)}/>
 
       </View>
     );

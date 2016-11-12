@@ -16,7 +16,9 @@ class ListPage extends Component {
   constructor(props) {
     super(props);
     this.reporting_client = new ReportingClient();
-    this.state = {reports:[]};
+    this.state = {
+      reports:[]
+    };
   }
 
   reportsChanged = (reports) =>  {
@@ -52,7 +54,10 @@ class ListPage extends Component {
         />
 
 
-        <InputText onPress={() => this.ReportingClient.addReport(this.state.message)}/>
+        <InputText onSend={(text) => this.reporting_client.addReport({
+          text
+          // position
+        })} />
 
 
       </View>

@@ -15,7 +15,9 @@ export default class reporting_app extends Component {
 
 constructor(props){
   super(props);
-  this.state = {messages:{}};
+  this.state = {
+    text: ""
+  };
 }
 
 
@@ -30,11 +32,15 @@ constructor(props){
         <TextInput
           autoFocus
           style={{height: textInputHeight, width: (width-60)}}
-          onChangeText={(message) => this.setState({message})}
-          value={this.state.message} />
+          value={this.state.text}
+          onChangeText={(text) => this.setState({text})}
+          content={this.state.text} />
 
           <TouchableOpacity
-            onPress={this.props.onPress}
+            onPress={() => {
+              this.props.onSend(this.state.text)
+              this.setState({text: ''})
+            }}
             style={styles.navBarRightButton}>
             <Icon name="paper-plane" size={30} color="#8498db" style={{}}/>
           </TouchableOpacity>
