@@ -5,14 +5,16 @@
 import { SIGNEDIN } from '../actions'
 
 const defaultUser = {
-  uid: null
+  uid: null,
   loggedIn: false
 }
 
 export default {
   SIGNED_IN: (state, action) => {
-    uid: action.uid,
-    loggedIn: true
+    return {
+      uid: action.uid,
+      loggedIn: true
+    }
   },
   NOOP: () => defaultUser
 }

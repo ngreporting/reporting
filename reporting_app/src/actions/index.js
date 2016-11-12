@@ -1,4 +1,4 @@
-export const NOOP = 'NOOP'
+
 
 export const NOOP = 'NOOP',
     SIGNED_IN = 'SIGNED_IN',
@@ -9,8 +9,7 @@ export const NOOP = 'NOOP',
     ADD_MESSAGE = 'ADD_MESSAGE',
     USER_CHANGED = 'USER_CHANGED',
     ATTACHEMENT_CHANGED = 'ATTACHEMENT_CHANGED',
-    ADD_ATTACHMENT = 'ADD_ATTACHMENT',
-    ADD_MESSAGE = 'ADD_MESSAGE'
+    ADD_ATTACHMENT = 'ADD_ATTACHMENT'
 
 function signedIn (uid) {
   return {
@@ -83,4 +82,4 @@ function addMessage(message) {
 }
 
 export {signedIn, reportsChanged, addReport, threadChanged, messageChanged,
-addMessage, userChanged, attachmentChanged, addAttachment, addMessage}
+addMessage, userChanged, attachmentChanged, addAttachment}

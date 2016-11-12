@@ -10,7 +10,7 @@ function dispatchReducer(handlers) {
 }
 
 const RootReducer = combineReducers({
-  currentUser: dispatchReducer(userHandler)
+  currentUser: dispatchReducer(userReducer)
 })
 
 export default RootReducer
