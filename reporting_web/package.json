@@ -7,9 +7,11 @@
   },
   "dependencies": {
     "ionicons": "^3.0.0",
+    "moment": "^2.16.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-lightbox-component": "^0.2.0"
+    "react-lightbox-component": "^0.2.0",
+    "reporting_client": "file:../reporting_client"
   },
   "scripts": {
     "start": "react-scripts start",

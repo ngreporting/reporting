@@ -1,41 +1,52 @@
 import React, { Component } from 'react';
 import ChatHeader from '../ChatHeader/chatHeader';
 import ChatFooter from '../ChatFooter/chatFooter';
+import ReportingClient from '../../reporting_client';
 
+import ChatMessage from '../ChatMessage/chatMessage';
 import './chat.css';
 
+
 class Chat extends Component {
+    constructor(props) {
+        super(props);
+        this.reporting_client = new ReportingClient();
+        this.state = {thread:{messages:[]}}
+    };
+    monitorThread =(thread)=> {
+        this.setState({thread})
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.reporting_client.monitorThread(nextProps.threadId, this.monitorThread);
+    }
+
     render() {
+        var messages = [];
+        if(this.state.thread.messages){
+            Object.values(this.state.thread.messages).map((messageId)=>{
+                messages.push(<ChatMessage messageId={messageId} />
+                )
+            })
+        }
+
+
+
         return (
             <div className="innerChat">
-                <ChatHeader/>
+                <ChatHeader chatTitle={this.props.threadCurrentReport}/>
 
                 <div className="chatContent">
 
-                    <div className="pinnedMessage">
-                        <div className="chat guest">
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</p>
-                            <span>12.11.2016 | 20:11 Uhr</span>
-                        </div>
-                        <i className="ion-ios-star"></i>
-                    </div>
+                    {messages}
 
-                    <h4 className="newDate">12.11.2016</h4>
 
-                    <div className="chat me">
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. </p>
-                        <span>20:13 Uhr</span>
-                    </div>
 
-                    <div className="chat me">
-                        <p>Lorem ipsum dolor sit amet elit. </p>
-                        <span>20:13 Uhr</span>
-                    </div>
 
 
                 </div>
 
-                <ChatFooter/>
+                <ChatFooter threadId={this.props.threadId}/>
 
             </div>
 

@@ -78,6 +78,8 @@ input {
 }
 .chatContent {
     flex: 1;
+    overflow: auto;
+    height: 400px;
 }
 .header {
     background-color: #3498db;
@@ -91,4 +93,5 @@ input {
     color: white;
     padding-left: 10px;
     display: flex;
+    align-items: center;
 }
