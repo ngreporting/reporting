@@ -52,7 +52,7 @@ class ThreadPage extends Component {
           console.log('change', event)
         }}>
       <StatusBar
-       backgroundColor="#2c3e50"
+       backgroundColor="#8498db"
        barStyle="light-content"
       />
 

@@ -94,7 +94,7 @@ class reporting_app extends Component {
     return (
 
       <Navigator
-        initialRoute={{index: 0, title: 'Olepsy'}}
+        initialRoute={{index: 0, title: 'O-Lap-sie'}}
         renderScene={this.renderScene}
         style={styles.container}
         navigationBar={
