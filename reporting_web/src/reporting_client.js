@@ -103,7 +103,7 @@ class ReportingClient {
             console.log(`New value for ${path}: ` + JSON.stringify(snapshot.val()))
             cb(snapshot.val() || {})
         })
-        return ref.off.bind(ref, listener)
+        return ref.off.bind(ref, 'value', listener)
     }
 
     _isEditor() {
@@ -115,11 +115,19 @@ class ReportingClient {
     // cancle monitoring.
     monitorReports (cb) {
         var queryFn = (ref) => {
-            return this._isEditor() ? ref : ref.orderByChild('author').equalTo(this.user.uid)
+            return this._isEditor() ?
+                ref.orderByChild('threads').equalTo(null) :
+                ref.orderByChild('author').equalTo(this.user.uid)
         }
         return this._monitor('reports', (reports) => {
-            cb(Object.keys(reports).sort().map(key => reports[key]))
+            cb(Object.keys(reports).sort().map(key => Object.assign(reports[key], {uid: key})))
         }, queryFn)
+    }
+
+    monitorThreads(cb) {
+        return this._monitor('threads', (threads) => {
+            cb(Object.keys(threads).sort().map(key => Object.assign(threads[key], {uid: key})))
+        }, ref => ref.orderByChild('responder').equalTo(this.user.uid))
     }
 
     // Calls cb for every change of the given thread. Returns a function to
@@ -189,12 +197,12 @@ class ReportingClient {
         return ref.key
     }
 
-    // Upload attachment with base64 encoded data and given extension
+    // Upload attachment with base64 encoded data and given mimetype
     // (e.g. 'jpg')
     // Calls progressCb multiple times with one parameter between 0.0 ans 1.0
     // Calls successCb one time with download URL as parameter
-    uploadAttachment(data, extension, progressCb, successCb) {
-        if (this._delay(this.uploadAttachment.bind(this, data, extension, progressCb, successCb))) {
+    uploadAttachment(data, mimetype, progressCb, successCb) {
+        if (this._delay(this.uploadAttachment.bind(this, data, mimetype, progressCb, successCb))) {
             return
         }
         var counter = 5

@@ -17,7 +17,7 @@
     padding: 5px;
     color: #2c3e50;
 }
-.listElement {
+.unansweredList .favElement {
     background-color: white;
     margin: 5px;
     padding: 5px;
@@ -27,9 +27,13 @@
     transition: opacity 1s;
 
 }
-.listElement:hover {
+.unansweredList .favElement:hover {
     opacity: 1;
     transition: opacity 1s;
+}
+.unansweredList .favElement.active {
+    opacity: 1;
+
 }
 
 h3 {
