@@ -106,13 +106,19 @@ class ReportingClient {
         return ref.off.bind(ref, listener)
     }
 
+    _isEditor() {
+        return !!this.user.organization
+    }
+
     // Calls cb with all reports visible to the logged in user (all reports
     // for journalists, own reports for any one else). Returns a function to
     // cancle monitoring.
     monitorReports (cb) {
+        var queryFn = this._isEditor() ? ref => ref :
+            ref => ref.orderByChild('author').equalTo(this.user.uid)
         return this._monitor('reports', (reports) => {
             cb(Object.keys(reports).sort().map(key => reports[key]))
-        }, ref => ref.orderByChild('author').equalTo(this.user.uid))
+        }, queryFn)
     }
 
     // Calls cb for every change of the given thread. Returns a function to
