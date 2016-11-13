@@ -114,8 +114,9 @@ class ReportingClient {
     // for journalists, own reports for any one else). Returns a function to
     // cancle monitoring.
     monitorReports (cb) {
-        var queryFn = this._isEditor() ? ref => ref :
-            ref => ref.orderByChild('author').equalTo(this.user.uid)
+        var queryFn = (ref) => {
+            return this._isEditor() ? ref : ref.orderByChild('author').equalTo(this.user.uid)
+        }
         return this._monitor('reports', (reports) => {
             cb(Object.keys(reports).sort().map(key => reports[key]))
         }, queryFn)
