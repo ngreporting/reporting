@@ -201,7 +201,7 @@ class ReportingClient {
     // (e.g. 'jpg')
     // Calls progressCb multiple times with one parameter between 0.0 ans 1.0
     // Calls successCb one time with download URL as parameter
-    uploadAttachment(data, mimetyp, progressCb, successCb) {
+    uploadAttachment(data, mimetype, progressCb, successCb) {
         if (this._delay(this.uploadAttachment.bind(this, data, mimetype, progressCb, successCb))) {
             return
         }
