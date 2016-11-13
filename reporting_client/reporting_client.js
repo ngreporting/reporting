@@ -103,7 +103,7 @@ class ReportingClient {
             console.log(`New value for ${path}: ` + JSON.stringify(snapshot.val()))
             cb(snapshot.val() || {})
         })
-        return ref.off.bind(ref, listener)
+        return ref.off.bind(ref, 'value', listener)
     }
 
     _isEditor() {
