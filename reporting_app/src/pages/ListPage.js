@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Text,
+  KeyboardAvoidingView,
   ListView,
   StyleSheet,
   View,
@@ -44,7 +45,10 @@ class ListPage extends Component {
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var dataSource = ds.cloneWithRows(this.state.reports);
     return (
-      <View style={{flex: 1, marginTop: 30}}>
+      <View  style={{flex: 1, marginTop: 30, padding: 0}} behavior='height' keyboardVerticalOffset={30} 
+        onKeyboardChange={(event) => {
+          console.log('change', event)
+        }}>
 
       <StatusBar
        backgroundColor="#8498db"

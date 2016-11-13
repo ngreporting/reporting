@@ -22,15 +22,16 @@ export default class reporting_app extends Component {
 var {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
+    backgroundColor: '#3597d3',
     margin: 10,
     marginRight: (width * 0.2),
     marginBottom: 0,
     borderRadius: 7
   },
   text: {
-    color: '#2c3e50',
-    fontSize: 20
+    color: '#FFF',
+    fontSize: 18,
+    padding: 6
   },
   dateTime: {
     backgroundColor: '#ecf0f1',

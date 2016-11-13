@@ -27,10 +27,15 @@ constructor(props){
     var textInputHeight = width < 1000? 40:40;
     return (
 
-      <View style={{ backgroundColor: '#2c3e50' , padding: 10, flexDirection: 'row'}}>
+      <View style={{ backgroundColor: '#2c3e50' , padding: 10, marginBottom: this.state.marginBottom, flexDirection: 'row'}}>
 
         <TextInput
-          autoFocus
+          onFocus={()=>{
+            this.setState(Object.assign({}, this.state, {marginBottom: 253}))
+          }}
+          onEndEditing={()=>{
+            this.setState(Object.assign({}, this.state, {marginBottom: 0}))
+          }}
           style={{height: textInputHeight, width: (width-70), color: '#FFF'}}
           value={this.state.text}
           onChangeText={(text) => this.setState({text})}
