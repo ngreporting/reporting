@@ -41,7 +41,7 @@ class ReportCard extends Component {
 
     var threadRows = []
     if (this.props.threads) {
-      this.props.threads.map((threadId) => {
+      Object.keys(this.props.threads).map((threadId) => {
         threadRows.push(<ThreadRow key={threadId} threadId={threadId} navigator={this.props.navigator} />)
       })
     }
@@ -49,12 +49,7 @@ class ReportCard extends Component {
     return (
         <View
         style={{margin: 10, marginBottom: 0, backgroundColor: '#DDD'}}>
-          <TouchableHighlight
-            onPress={() => {
-              this.props.navigator.push({index: 1, title: 'SWR 3'})
-            }}>
-            { header }
-          </TouchableHighlight>
+          { header }
           { threadRows }
         </View>
     );
