@@ -10,14 +10,40 @@ class ChatMessage extends Component {
         super(props);
         this.state = {message:{}};
         this.reporting_client = new ReportingClient();
-    };
-    monitorMessage =(message)=> {
+    }
+
+    monitorMessage = (message)=> {
         this.setState({message})
-    };
+    }
 
+    componentWillReceiveProps(props){
+        console.log('recieve props chatmessage');
+        if (typeof this.unregister === 'function') {
+            this.unregister();
+            this.unregister = undefined;
+        }
+        if (props.messageId) {
+            console.log('registered props chatmessage');
+            this.unregister = this.reporting_client.monitorMessage(props.messageId, this.monitorMessage);
+        } else {
+            console.log('emptied state props chatmessage');
+            this.setState({message:{}})
+        }
+    }
 
-    componentWillMount(){
-        this.reporting_client.monitorMessage(this.props.messageId, this.monitorMessage);
+    componentDidMount(){
+        console.log('mounted props chatmessage');
+        if (typeof this.unregister === 'function') {
+            this.unregister();
+            this.unregister = undefined;
+        }
+        if (this.props.messageId) {
+            console.log('registered props chatmessage');
+            this.unregister = this.reporting_client.monitorMessage(this.props.messageId, this.monitorMessage);
+        } else {
+            console.log('emptied state props chatmessage');
+            this.setState({message:{}})
+        }
     }
 
 
@@ -27,7 +53,7 @@ class ChatMessage extends Component {
         var date = moment(this.state.message.date).format("DD.MM.YYYY");
 
         return (
-                <div className={`chat ${messageAuthor}`}>
+               <div className={`chat ${messageAuthor}`}>
                     <p>{this.state.message.text}</p>
                     <span>{date} | {time} Uhr</span>
                 </div>

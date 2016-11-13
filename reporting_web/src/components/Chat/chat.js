@@ -11,42 +11,57 @@ class Chat extends Component {
     constructor(props) {
         super(props);
         this.reporting_client = new ReportingClient();
-        this.state = {thread:{messages:[]}}
-    };
-    monitorThread =(thread)=> {
+        this.state = {
+            thread: {
+                messages:[]
+            }
+        }
+    }
+
+    monitorThread (thread) {
+        console.log('get new thread value ', thread)
         this.setState({thread})
     }
 
-    componentWillReceiveProps(nextProps){
-        this.reporting_client.monitorThread(nextProps.threadId, this.monitorThread);
+    componentWillReceiveProps(props) {
+        if (typeof this.unregister == 'function') {
+            this.unregister();
+            this.unregister = undefined;
+        }
+        if (props.currentThread) {
+            this.unregister = this.reporting_client.monitorThread(props.currentThread, this.monitorThread.bind(this));
+        } else {
+            this.setState({
+                thread: {
+                    messages:[]
+                }
+            })
+        }
     }
 
     render() {
         var messages = [];
-        if(this.state.thread.messages){
-            Object.values(this.state.thread.messages).map((messageId)=>{
-                messages.push(<ChatMessage messageId={messageId} />
-                )
-            })
+        if(this.state.thread.messages) {
+            messages = Object.values(this.state.thread.messages).map((messageId)=>{
+                return (
+                    <ChatMessage messageId={messageId} key={messageId}/>
+                );
+            });
         }
 
 
 
         return (
             <div className="innerChat">
-                <ChatHeader chatTitle={this.props.threadCurrentReport}/>
+                <ChatHeader/>
 
                 <div className="chatContent">
 
                     {messages}
 
-
-
-
-
                 </div>
 
-                <ChatFooter threadId={this.props.threadId}/>
+                <ChatFooter setCurrentThread={this.props.setCurrentThread} currentThread={this.props.currentThread} currentReport={this.props.currentReport}/>
 
             </div>
 

@@ -14,11 +14,12 @@ class App extends Component {
         var client = new ReportingClient(ReportingConfig);
         client.login('mustermann@swr.de', '123123123', false);
 
-        this.state = {threadId: null, threadCurrentReport: null};
+        this.state = {currentThread: null, currentReport: null};
     };
 
-    setCurrentThread = (threadId,threadCurrentReport) => {
-      this.setState({threadId:threadId, threadCurrentReport:threadCurrentReport})
+    setCurrentThread (currentThread,currentReport) {
+        this.setState({currentThread, currentReport})
+        this.forceUpdate()
     };
 
   render() {
@@ -28,14 +29,14 @@ class App extends Component {
         <div className="listView">
             <ListHeader/>
             <div className="listContent">
-                <FavList/>
-                <List setCurrentThread={this.setCurrentThread}/>
+                <FavList setCurrentThread={this.setCurrentThread.bind(this)} currentThread={this.state.currentThread}/>
+                <List setCurrentThread={this.setCurrentThread.bind(this)} currentReport={this.state.currentReport}/>
             </div>
 
           </div>
 
         <div className="chatView">
-            <Chat threadId={this.state.threadId} threadCurrentReport={this.state.threadCurrentReport}/>
+            <Chat setCurrentThread={this.setCurrentThread.bind(this)} currentThread={this.state.currentThread} currentReport={this.state.currentReport}/>
         </div>
 
       </div>
