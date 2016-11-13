@@ -197,12 +197,12 @@ class ReportingClient {
         return ref.key
     }
 
-    // Upload attachment with base64 encoded data and given extension
+    // Upload attachment with base64 encoded data and given mimetype
     // (e.g. 'jpg')
     // Calls progressCb multiple times with one parameter between 0.0 ans 1.0
     // Calls successCb one time with download URL as parameter
-    uploadAttachment(data, mime, progressCb, successCb) {
-        if (this._delay(this.uploadAttachment.bind(this, data, extension, progressCb, successCb))) {
+    uploadAttachment(data, mimetyp, progressCb, successCb) {
+        if (this._delay(this.uploadAttachment.bind(this, data, mimetype, progressCb, successCb))) {
             return
         }
         var counter = 5
