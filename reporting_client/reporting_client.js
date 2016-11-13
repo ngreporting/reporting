@@ -115,11 +115,19 @@ class ReportingClient {
     // cancle monitoring.
     monitorReports (cb) {
         var queryFn = (ref) => {
-            return this._isEditor() ? ref : ref.orderByChild('author').equalTo(this.user.uid)
+            return this._isEditor() ?
+                ref.orderByChild('threads').equalTo(null) :
+                ref.orderByChild('author').equalTo(this.user.uid)
         }
         return this._monitor('reports', (reports) => {
             cb(Object.keys(reports).sort().map(key => reports[key]))
         }, queryFn)
+    }
+
+    monitorThreads(cb) {
+        return this._monitor('threads', (threads) => {
+            cb(Object.keys(threads).sort().map(key => threads[key]))
+        }, ref => ref.orderByChild('responder').equalTo(this.user.uid))
     }
 
     // Calls cb for every change of the given thread. Returns a function to
