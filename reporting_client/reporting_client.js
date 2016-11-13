@@ -120,13 +120,13 @@ class ReportingClient {
                 ref.orderByChild('author').equalTo(this.user.uid)
         }
         return this._monitor('reports', (reports) => {
-            cb(Object.keys(reports).sort().map(key => reports[key]))
+            cb(Object.keys(reports).sort().map(key => Object.assign(reports[key], {uid: key})))
         }, queryFn)
     }
 
     monitorThreads(cb) {
         return this._monitor('threads', (threads) => {
-            cb(Object.keys(threads).sort().map(key => threads[key]))
+            cb(Object.keys(threads).sort().map(key => Object.assign(threads[key], {uid: key})))
         }, ref => ref.orderByChild('responder').equalTo(this.user.uid))
     }
 
@@ -201,7 +201,7 @@ class ReportingClient {
     // (e.g. 'jpg')
     // Calls progressCb multiple times with one parameter between 0.0 ans 1.0
     // Calls successCb one time with download URL as parameter
-    uploadAttachment(data, extension, progressCb, successCb) {
+    uploadAttachment(data, mime, progressCb, successCb) {
         if (this._delay(this.uploadAttachment.bind(this, data, extension, progressCb, successCb))) {
             return
         }
