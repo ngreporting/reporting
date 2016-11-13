@@ -100,7 +100,7 @@ class reporting_app extends Component {
         navigationBar={
           <Navigator.NavigationBar
           routeMapper={NavigationBarRouteMapper}
-          style={{backgroundColor: '#8498db',
+          style={{backgroundColor: '#2c3e50',
                   height: 45}}
           />
 

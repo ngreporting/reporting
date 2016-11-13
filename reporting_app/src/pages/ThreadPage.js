@@ -32,7 +32,11 @@ class ThreadPage extends Component {
   }
 
   componentDidMount() {
-    this.client.monitorThread(this.props.threadId, this.monitorThread)
+    this.killMonitor = this.client.monitorThread(this.props.threadId, this.monitorThread)
+  }
+
+  componentWillUnmount() {
+    this.killMonitor()
   }
 
   render() {

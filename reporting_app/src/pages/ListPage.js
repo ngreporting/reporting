@@ -28,7 +28,11 @@ class ListPage extends Component {
   }
 
   componentDidMount(){
-    this.reporting_client.monitorReports(this.reportsChanged);
+    this.killMonitor = this.reporting_client.monitorReports(this.reportsChanged);
+  }
+
+  componentWillUnmount() {
+    this.killMonitor()
   }
 
 

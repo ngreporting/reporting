@@ -23,7 +23,11 @@ monitorMessage = (message) => {
 }
 
 componentDidMount(){
-  this.ReportingClient.monitorMessage(this.props.messageId, this.monitorMessage);
+  this.killMonitor = this.ReportingClient.monitorMessage(this.props.messageId, this.monitorMessage);
+}
+
+componentWillUnmount() {
+  this.killMonitor()
 }
 
   render() {

@@ -23,7 +23,11 @@ export default class ThreadRow extends Component {
   }
 
   componentDidMount() {
-    this.ReportClient.monitorThread(this.props.threadId, this.monitorThread)
+    this.killMonitor = this.ReportClient.monitorThread(this.props.threadId, this.monitorThread)
+  }
+
+  componentWillUnmount() {
+    this.killMonitor()
   }
 
   render() {
@@ -33,9 +37,9 @@ export default class ThreadRow extends Component {
         onPress={() => {
           this.props.navigator.push({index: 1, title: 'SWR 3', threadId: this.props.threadId})
         }}>
-        <View style={{padding: 10, marginBottom: 1, backgroundColor: '#333', flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={{color: '#DDD'}}>{ this.state.thread.responder }</Text>
-        <Text style={{color: '#DDD'}}>{ count }</Text>
+        <View style={{padding: 10, marginBottom: 1, backgroundColor: '#f49919', flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={{color: '#FFF'}}>{ this.state.thread.responder }</Text>
+        <Text style={{color: '#FFF'}}>{ count }</Text>
         </View>
       </TouchableHighlight>
     );

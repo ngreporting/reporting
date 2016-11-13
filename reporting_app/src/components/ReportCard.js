@@ -23,7 +23,11 @@ class ReportCard extends Component {
   }
 
   componentDidMount(){
-    this.ReportClient.monitorReport(this.props.reportId, this.monitorReport);
+    this.killMonitor = this.ReportClient.monitorReport(this.props.reportId, this.monitorReport);
+  }
+
+  componentWillUnmount() {
+    this.killMonitor()
   }
 
   render() {
@@ -36,7 +40,7 @@ class ReportCard extends Component {
           source={{uri: this.props.image}}
         />
     } else {
-      header = <Text style={{padding: 10, color: '#333'}}>{this.props.text}</Text>
+      header = <Text style={{padding: 10, color: '#FFF'}}>{this.props.text}</Text>
     }
 
     var threadRows = []
@@ -48,7 +52,7 @@ class ReportCard extends Component {
 
     return (
         <View
-        style={{margin: 10, marginBottom: 0, backgroundColor: '#DDD'}}>
+        style={{margin: 10, marginBottom: 0, backgroundColor: '#3597d3'}}>
           { header }
           { threadRows }
         </View>

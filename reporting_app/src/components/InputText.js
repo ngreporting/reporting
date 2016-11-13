@@ -24,14 +24,14 @@ constructor(props){
   render() {
 
     var {width, height} = Dimensions.get('window')
-    var textInputHeight = width < 1000? 20:40;
+    var textInputHeight = width < 1000? 40:40;
     return (
 
-      <View style={{ backgroundColor: 'white',borderRadius: 7 , margin: 10, width: (width*0.98), flexDirection: 'row'}}>
+      <View style={{ backgroundColor: '#2c3e50' , padding: 10, flexDirection: 'row'}}>
 
         <TextInput
           autoFocus
-          style={{height: textInputHeight, width: (width-60)}}
+          style={{height: textInputHeight, width: (width-70), color: '#FFF'}}
           value={this.state.text}
           onChangeText={(text) => this.setState({text})}
           content={this.state.text} />
@@ -42,7 +42,7 @@ constructor(props){
               this.setState({text: ''})
             }}
             style={styles.navBarRightButton}>
-            <Icon name="paper-plane" size={30} color="#8498db" style={{}}/>
+            <Icon name="paper-plane" size={40} color="#f49919" style={{}}/>
           </TouchableOpacity>
       </View>
 
