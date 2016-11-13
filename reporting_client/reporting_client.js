@@ -174,7 +174,13 @@ class ReportingClient {
         if (this._delay(this.addReport.bind(this, report, ref))) {
             return ref.key
         }
-        ref.set(Object.assign({}, report, {
+        if (report.picture) {
+            const metadata = {
+              contentType: 'image/jpeg'
+            }
+            this.uploadAttachment(this.picture.data, metadata, (pg)=>{console.log(pg)}, (url)=>{console.log(url)})
+        }
+        ref.set(Object.assign({}, report.text, {
             author: this.user.uid,
             date: Date.now()
         }))
@@ -205,18 +211,47 @@ class ReportingClient {
         if (this._delay(this.uploadAttachment.bind(this, data, mimetype, progressCb, successCb))) {
             return
         }
-        var counter = 5
-        var intv = setInterval(() => {
-            progressCb(1.0 - (counter * 0.2))
-            counter -= 1
-            if (counter < 0) {
-                clearInterval(intv)
+
+        var storageRef = this.firebase.storage().ref();
+        var mountainsRef = storageRef.child('mountains.jpg');
+
+        // Upload file and metadata to the object 'images/mountains.jpg'
+        var uploadTask = storageRef.child('images/test.jpg').put(data, metadata);
+
+        // Listen for state changes, errors, and completion of the upload.
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+          function(snapshot) {
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            progressCb(progress)
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+              case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
             }
-        }, 1000)
-        setTimeout(() => {
-            progressCb(1.0)
-            successCb('https://source.unsplash.com/random')
-        }, 5500)
+          }, function(error) {
+          switch (error.code) {
+            case 'storage/unauthorized':
+              // User doesn't have permission to access the object
+              break;
+
+            case 'storage/canceled':
+              // User canceled the upload
+              break;
+
+            case 'storage/unknown':
+              // Unknown error occurred, inspect error.serverResponse
+              break;
+          }
+        }, function() {
+          // Upload completed successfully, now we can get the download URL
+          var downloadURL = uploadTask.snapshot.downloadURL;
+          successCb(downloadURL)
+        });
     }
 
     _update(path, val) {

@@ -5,8 +5,7 @@
   "license": "MIT",
   "scripts": {
     "test": "node test.js",
-    "start": "watch 'npm test' .",
-    "postinstall": "browserify reporting_client.js -o dist.js -t [ babelify --presets [ es2015 react ] ]"
+    "start": "watch 'npm test' ."
   },
   "dependencies": {
     "firebase": "^3.6.0",
