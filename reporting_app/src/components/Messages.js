@@ -25,6 +25,7 @@ export default class reporting_app extends Component {
     return (
       <View style={styles.container}>
         <ListView
+          enableEmptySections
           dataSource={dataSource}
           renderRow={this.renderMessage}
         />

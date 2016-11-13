@@ -37,7 +37,6 @@ class ListPage extends Component {
   }
 
   render() {
-    console.log(this.state.reports);
     const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     var dataSource = ds.cloneWithRows(this.state.reports);
     return (
@@ -49,6 +48,7 @@ class ListPage extends Component {
       />
 
         <ListView
+          enableEmptySections
           dataSource={dataSource}
           renderRow={this.renderReportCard}
         />
