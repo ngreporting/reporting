@@ -8,12 +8,13 @@ import {
 
 export default class reporting_app extends Component {
   render() {
+    var date = new Date(this.props.message.date)
     return (
       <View style={styles.view}>
         <View style={styles.container}>
           <Text style={styles.text}> {this.props.message.text}</Text>
         </View>
-        <Text style={styles.dateTime}> {this.props.message.dateTime}  </Text>
+        <Text style={styles.dateTime}>{date.toLocaleString('de')}</Text>
       </View>
     );
   }
@@ -34,10 +35,8 @@ const styles = StyleSheet.create({
     padding: 6
   },
   dateTime: {
-    backgroundColor: '#ecf0f1',
     width: width,
-    opacity: 1,
-    color: 'black',
+    color: '#777',
     fontSize: 15,
     left: 15
   },

@@ -9,6 +9,7 @@ import {
 
 export default class reporting_app extends Component {
   render() {
+    var date = new Date(this.props.message.date)
     var img;
     if (this.props.image) {
       img = <Image
@@ -22,7 +23,7 @@ export default class reporting_app extends Component {
           {img}
           <Text style={styles.text}> {this.props.message.text} </Text>
         </View>
-        <Text style={styles.dateTime}> {this.props.message.date}  </Text>
+        <Text style={styles.dateTime}>{date.toLocaleString('de')}</Text>
       </View>
     );
   }
@@ -32,7 +33,7 @@ var {height, width} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#f49919',
-    margin: 20,
+    margin: 15,
     marginBottom: 0,
     marginLeft: (width * 0.2)
   },
@@ -43,12 +44,11 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   dateTime: {
-    backgroundColor: '#ecf0f1',
+    color: '#777',
     width: width,
-    opacity: 1,
-    color: 'black',
     fontSize: 15,
-    left: (width*0.93)
+    textAlign: 'right',
+    paddingRight: 20
   },
   view: {
     width: width,
