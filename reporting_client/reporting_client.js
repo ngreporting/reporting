@@ -177,6 +177,7 @@ class ReportingClient {
         }).then(() => {
             const message = this.addMessage(ref.key, initialMessage)
             this.firebase.database().ref(`threads/${ref.key}/messages`).push(message)
+            this.firebase.database().ref(`reports/${report}/threads`).push(ref.key)
         })
         return ref.key
     }
