@@ -4,6 +4,7 @@ import {
   Dimensions,
   Text,
   ListView,
+  KeyboardAvoidingView,
   StyleSheet,
   TextInput,
   View,
@@ -46,9 +47,12 @@ class ThreadPage extends Component {
 
 
     return (
-      <View style={{flex: 1, marginTop: 30}}>
+      <View  style={{flex: 1, marginTop: 30}} behavior='height' keyboardVerticalOffset={30}
+        onKeyboardChange={(event) => {
+          console.log('change', event)
+        }}>
       <StatusBar
-       backgroundColor="#8498db"
+       backgroundColor="#2c3e50"
        barStyle="light-content"
       />
 

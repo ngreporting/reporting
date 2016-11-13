@@ -39,7 +39,7 @@ componentWillUnmount() {
         />
     }
     var msg;
-    if(this.state.message.author === 'anon1'){
+    if(this.state.message.author === this.ReportingClient.user.uid){
       msg = <MessageRequest message = {this.state.message}/>;
     } else{
       msg = <MessageResponse message = {this.state.message}/>;
