@@ -30,8 +30,13 @@ constructor(props){
       <View style={{ backgroundColor: '#2c3e50' , padding: 10, marginBottom: this.state.marginBottom, flexDirection: 'row'}}>
 
         <TextInput
+          returnKeyType='send'
+          onSubmitEditing={() => {
+              this.props.onSend(this.state.text)
+              this.setState({text: ''})
+            }}
           onFocus={()=>{
-            this.setState(Object.assign({}, this.state, {marginBottom: 253}))
+            this.setState(Object.assign({}, this.state, {marginBottom: 265}))
           }}
           onEndEditing={()=>{
             this.setState(Object.assign({}, this.state, {marginBottom: 0}))
